@@ -3,6 +3,8 @@ package uk.co.jpmorgan.simple.stock.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.inject.Singleton;
+
 import uk.co.jpmorgan.simple.stock.model.Stock;
 import uk.co.jpmorgan.simple.stock.model.Stock.StockType;
 
@@ -15,19 +17,15 @@ import uk.co.jpmorgan.simple.stock.model.Stock.StockType;
  * @author r567514
  *
  */
+@Singleton
 public final class StockDataGenerator {
 
 	private List<Stock> stocks = new ArrayList<Stock>();
-	private static StockDataGenerator instance = new StockDataGenerator();
-	
-	public static StockDataGenerator getInstance() {
-		return instance;
-	}
 	
 	/**
 	 * Data setup from table in document
 	 */
-	private StockDataGenerator() {
+	public StockDataGenerator() {
 		createStock("TEA", StockType.COMMON, 0d, 0d, 100d, 150d);
 		createStock("POP", StockType.COMMON, 8d, 0d, 100d, 215d);
 		createStock("ALE", StockType.COMMON, 23d, 0d, 60d, 87d);

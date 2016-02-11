@@ -5,7 +5,7 @@ package uk.co.jpmorgan.simple.stock.model;
  * 
  * Object contains all variables requires to represent Stock.
  * 
- * @author r567514
+ * @author Muhammad Aamir
  *
  */
 public class Stock {

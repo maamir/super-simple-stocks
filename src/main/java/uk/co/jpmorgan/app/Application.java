@@ -1,45 +1,32 @@
 package uk.co.jpmorgan.app;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import uk.co.jpmorgan.app.module.SimpleStockModule;
+import uk.co.jpmorgan.simple.stock.trade.TradeProcessor;
 
-import uk.co.jpmorgan.simple.stock.SimpleStockService;
-import uk.co.jpmorgan.simple.stock.impl.SimpleStockServiceImpl;
-import uk.co.jpmorgan.simple.stock.model.Stock;
-import uk.co.jpmorgan.simple.stock.model.Trade;
-import uk.co.jpmorgan.simple.stock.model.Trade.TradeTypeIndicator;
-import uk.co.jpmorgan.simple.stock.util.StockDataGenerator;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
+/**
+ * File: Application.java
+ * 
+ * Main execution performed here and all classes instance
+ * get created from Google {@link Guice}.
+ * 
+ * @author Muhammad Aamir
+ *
+ */
 public class Application {
-
-	private static SimpleStockService simpleStockService = new SimpleStockServiceImpl(); 
 	
+	/**
+	 * The modules are the building blocks of an injector, 
+	 * which is Guice's object-graph builder. First we create 
+	 * the injector, and then we can use that to build the TradeProcessor.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {		
-		List<Stock> stocks = StockDataGenerator.getInstance().getStocks();
-
-		for(Stock stock : stocks){
-			doTrade(stock);
-		}
-		
-		for(Stock stock: stocks) {
-			Random random = new Random();
-			
-			System.out.println(String.format("****************** %s **************", stock.getStockSymbol()));
-			System.out.println(String.format("Dividend yield: %.2f", simpleStockService.calculateDividendYield(stock, random.nextDouble())));
-			System.out.println(String.format("PE Ratio: %.2f", simpleStockService.calculatePERatio(stock, random.nextDouble())));
-			System.out.println(String.format("Stock Price: %.2f", simpleStockService.calculateStockPrice(stock.getStockSymbol())));
-		}
-		
-		System.out.println("--------------- GBCE -------------");
-		System.out.println(simpleStockService.calculateGBCEShareindex());
+		Injector injector = Guice.createInjector(new SimpleStockModule());
+		TradeProcessor processor = injector.getInstance(TradeProcessor.class);
+		processor.doTrade();
 	}
-
-	private static void doTrade(Stock stock) {
-		Random rand = new Random();
-		
-		Trade trade = new Trade(stock, rand.nextInt(100), rand.nextDouble() + 102 , new Date(), rand.nextBoolean() ? TradeTypeIndicator.BUY : TradeTypeIndicator.SELL);
-		simpleStockService.recordTrade(trade);
-	}
-
 }

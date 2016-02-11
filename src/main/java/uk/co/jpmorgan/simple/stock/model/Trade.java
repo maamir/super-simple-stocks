@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * Object to capture/record trade details.
  * 
- * @author r567514
+ * @author Muhammad Aamir
  *
  */
 public class Trade {

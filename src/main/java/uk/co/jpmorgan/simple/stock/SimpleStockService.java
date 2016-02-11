@@ -3,6 +3,12 @@ package uk.co.jpmorgan.simple.stock;
 import uk.co.jpmorgan.simple.stock.model.Stock;
 import uk.co.jpmorgan.simple.stock.model.Trade;
 
+/**
+ * File: SimpleStockService.java
+ * 
+ * @author Muhammad Aamir
+ *
+ */
 public interface SimpleStockService {
 
 	/**
